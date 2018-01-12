@@ -20,20 +20,17 @@ pipeline {
             sh 'serverless --version'
           }
         }
-        stage('npm install'){
-          steps{
-            sh 'npm install'
-          }
-        }
-        stage('npm test') {
-            steps {
-                sh 'npm test'
-            }
-        }
         stage('serverless deployment'){
           steps{
             withAWS(credentials:'AWS_CTI_DEV_CREDS') {
               sh "serverless deploy -s ${build}"
+            }
+          }
+        }
+        stage('serverless invoke'){
+          steps{
+            withAWS(credentials:'AWS_CTI_DEV_CREDS') {
+              sh "serverless invoke -f hello"
             }
           }
         }

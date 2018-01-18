@@ -27,13 +27,6 @@ pipeline {
             }
           }
         }
-        stage('serverless invoke'){
-          steps{
-            withAWS(credentials:'AWS_CTI_DEV_CREDS') {
-              sh "serverless invoke -f hello"
-            }
-          }
-        }
     }
     post {
         success {
